@@ -7,9 +7,9 @@ export interface DiscordUi {
 }
 
 export const discordUiDefault: DiscordUi = {
-  botName: "",
-  messageTitle: "",
-  embedTitle: "",
-  linkToRedirectTo: "",
-  embedContent: "",
+  botName: "Teste",
+  messageTitle: "mensagem",
+  embedTitle: "titulo",
+  linkToRedirectTo: "http://exemplo",
+  embedContent: "embed content",
 };

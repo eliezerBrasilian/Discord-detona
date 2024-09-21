@@ -1,35 +1,14 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { FormEvent } from "react";
+import { DiscordHook } from "./data/hooks/DiscordHook";
 import "./App.css";
-import { DiscordUi, discordUiDefault } from "./ui/DiscordUi";
-import { DiscordApiService } from "./services/DiscordApiService";
-
 function App() {
-  const [discordUi, setDiscordUi] = useState<DiscordUi>(discordUiDefault);
-
-  const discordApiService = new DiscordApiService();
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = event.target;
-
-    setDiscordUi((oldValueState) => ({
-      ...oldValueState,
-      [name]: value,
-    }));
-  };
+  const discordHook = DiscordHook();
 
   const handleSubmit = async (ev: FormEvent<HTMLFormElement>) => {
     ev.preventDefault();
-    console.log(discordUi);
+    console.log(discordHook.discordUi);
 
-    if (
-      discordUi.botName != "" &&
-      discordUi.embedContent != "" &&
-      discordUi.embedTitle != "" &&
-      discordUi.linkToRedirectTo != "" &&
-      discordUi.messageTitle != ""
-    ) {
-      await discordApiService.sendMessage(discordUi);
-    }
+    await discordHook.handleSendMessage();
   };
 
   return (
@@ -40,10 +19,10 @@ function App() {
           <label>Nome do bot</label>
           <input
             type="text"
-            value={discordUi.botName}
+            value={discordHook.discordUi.botName}
             name="botName"
             placeholder="Informe o nome do bot"
-            onChange={handleChange}
+            onChange={discordHook.handleChange}
           />
         </div>
         <div>
@@ -51,9 +30,9 @@ function App() {
           <input
             type="text"
             name="messageTitle"
-            value={discordUi.messageTitle}
+            value={discordHook.discordUi.messageTitle}
             placeholder="Informe o titulo da mensagem"
-            onChange={handleChange}
+            onChange={discordHook.handleChange}
           />
         </div>
         <div>
@@ -61,9 +40,9 @@ function App() {
           <input
             type="text"
             name="embedTitle"
-            value={discordUi.embedTitle}
+            value={discordHook.discordUi.embedTitle}
             placeholder="Informe o titulo do embed"
-            onChange={handleChange}
+            onChange={discordHook.handleChange}
           />
         </div>
         <div>
@@ -71,9 +50,9 @@ function App() {
           <input
             type="url"
             name="linkToRedirectTo"
-            value={discordUi.linkToRedirectTo}
+            value={discordHook.discordUi.linkToRedirectTo}
             placeholder="digite o link aqui"
-            onChange={handleChange}
+            onChange={discordHook.handleChange}
           />
         </div>
         <div>
@@ -81,9 +60,9 @@ function App() {
           <input
             type="text"
             name="embedContent"
-            value={discordUi.embedContent}
+            value={discordHook.discordUi.embedContent}
             placeholder="Informe o conteudo do embed"
-            onChange={handleChange}
+            onChange={discordHook.handleChange}
           />
         </div>
 
